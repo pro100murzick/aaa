@@ -6,16 +6,22 @@ public class Manager : MonoBehaviour
 {
 
     [SerializeField] Rotator rotator;
+    [SerializeField] PinSpawner pinSpawner;
+    [SerializeField] CameraAnimator cameraAnimator;
 
-    // Start is called before the first frame update
-    void Start()
+     private void DisableGameElements()
     {
-        
+        rotator.enabled = false;
+        pinSpawner.enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
+   public void GameOver()
     {
-        
+        DisableGameElements();
+        cameraAnimator.SetGameOverTrigger();
+    }
+    public void LevelComplete()
+    {
+        DisableGameElements();
+        cameraAnimator.SetLevelComleteTrigger();
     }
 }
