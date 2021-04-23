@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pin : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Pin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collisionObj)
     {
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (collisionObj.tag == "Pin")
         {
             FindObjectOfType<Manager>().GameOver();
@@ -33,7 +35,7 @@ public class Pin : MonoBehaviour
             manager.AddPin();
             if (manager.GetTotalNumberOfPins() == manager.GetCurrentNumberOfPins())
             {
-                manager.LevelComplete();
+                manager.LevelComplete(sceneIndex);
             }
         }
     }
