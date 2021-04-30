@@ -21,9 +21,10 @@ public class Manager : MonoBehaviour
         rotator.enabled = false;
         pinSpawner.enabled = false;
     }
-   public void GameOver()
+   public void GameOver(int sceneIndex)
     {
         DisableGameElements();
+        PlayerPrefs.SetInt(Level.LAST_LEVEL_KEY, sceneIndex);
         cameraAnimator.SetGameOverTrigger();
     }
     public void LevelComplete(int sceneIndex)

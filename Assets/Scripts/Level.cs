@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,6 +36,32 @@ public class Level : MonoBehaviour
         if (levelButtons.Length == 0)
         {
             return;
+        }
+        int levelReached = PlayerPrefs.GetInt(NEXT_LEVEL_KEY, LEVEL_TO_START);
+        for (int i = 0; i <levelButtons.Length; i++)
+        {
+            if (i > levelReached - 1)        
+            {
+                levelButtons[i].interactable = false;
+            }
+        }        
+    }
+
+    public void LoadSceneToPlay()
+    {
+        if (PlayerPrefs.GetInt(GAME_COMPLETE_KEY, GAME_INCOMPLETE) == 1) 
+        {
+            SceneManager.LoadScene("SelectLevel");
+            return;
+        }
+        int sceneToLoadIndex = PlayerPrefs.GetInt(NEXT_LEVEL_KEY, LEVEL_TO_START);
+        if (sceneToLoadIndex == totalSceneNumber + 1)
+        {
+            SceneManager.LoadScene("SceneLevel");
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneToLoadIndex);
         }
     }
 
@@ -80,5 +106,14 @@ public class Level : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void LoadSceneByUndex(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }
